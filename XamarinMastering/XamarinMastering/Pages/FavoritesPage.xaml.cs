@@ -30,7 +30,7 @@ namespace XamarinMastering.Pages
             await App.ViewModel.RefreshFavoritesAsync();
         }
 
-        private void OnItemTapped(object sender, ItemTappedEventArgs e)
+        private void FavoritesListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             new Common.Commands.NavigateToDetailCommand().Execute(e.Item as FavoriteInformation);
         }

@@ -7,7 +7,7 @@
         <ToolbarItem Command="{StaticResource RefreshNewsCommand}" CommandParameter="Favorites" Text="Refresh" Priority="0" Order="Primary" Icon="icon_refresh.png"/>
     </ContentPage.ToolbarItems>
 
-    <ListView ItemTapped="OnItemTapped" IsRefreshing="{Binding IsBusy}" SeparatorVisibility="None" x:Name="favoritesListView" HasUnevenRows="True" ItemsSource="{Binding Favorites}" Margin="10">
+    <ListView x:Name="favoritesListView" ItemTapped="FavoritesListView_ItemTapped" IsRefreshing="{Binding IsBusy}" SeparatorVisibility="None" HasUnevenRows="True" ItemsSource="{Binding Favorites}" Margin="10">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>

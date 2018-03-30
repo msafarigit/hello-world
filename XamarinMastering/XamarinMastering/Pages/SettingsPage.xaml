@@ -12,8 +12,9 @@
             <Label Style="{x:DynamicResource TitleStyle}" Text="Adjust your app settings and preferences as needed."/>
             <Label Style="{x:DynamicResource SubtitleStyle}" Text="Maximum articles to display:"/>
             <Slider x:Name="articleCountSlider" Minimum="0" Maximum="20"/>
-            <Label Style="{x:DynamicResource SubtitleStyle}" Text="Enter your display name:"/>
-            <Entry Text="{Binding CurrentUser.DisplayName, Mode=TwoWay}" /> <!-- By Default Two Way Binding -->
+            <Label Style="{x:DynamicResource SubtitleStyle}" Text="Enter your display name:"/><!--These x:DynamicResource Exist in Xamarin Platform-->
+            <Entry Text="{Binding CurrentUser.DisplayName, Mode=TwoWay}" />
+            <!-- By Default Two Way Binding, values: Default, OneWay, OneWayToSource TwoWay -->
             <Image HeightRequest="100" Source="{Binding CurrentUser.ProfileImageUrl}" Aspect="AspectFit"/>
 
             <Label Style="{x:DynamicResource SubtitleStyle}" Text="Current OS:" />
