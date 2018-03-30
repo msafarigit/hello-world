@@ -17,10 +17,12 @@ namespace XamarinMastering.Common.Commands
         private readonly Action execute;
 
         private readonly Func<bool> canExecute;
+
         public RelayCommand(Action execute)
             : this(execute, null)
         {
         }
+
         public RelayCommand(Action execute, Func<bool> canExecute)
         {
             if (execute == null)

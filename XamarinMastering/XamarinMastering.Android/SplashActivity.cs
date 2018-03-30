@@ -25,7 +25,7 @@ namespace XamarinMastering.Droid
             base.OnResume();
 
             Task startupTask = new Task(async () => {
-                await Task.Delay(1000);
+                await Task.Delay(2000);
             });
 
             startupTask.ContinueWith(t =>

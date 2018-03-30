@@ -21,15 +21,16 @@ namespace XamarinMastering
 
         protected override void OnAppearing()
         {
+            //this.Content = new StackLayout
+            //{
+            //};
+
             App.ViewModel = MainViewModel.GetViewModel();
             App.ViewModel.RefreshNewsAsync();
 
             App.MainNavigation = Navigation;
 
             CrossConnectivity.Current.ConnectivityChanged += Current_ConnectivityChanged;
-            //this.Content = new StackLayout
-            //{
-            //};
 
             string label = GeneralHelper.GetLabel("Hello ", true);
 

@@ -16,7 +16,7 @@ namespace XamarinMastering.Pages
         public NewsInformation CurrentArticle { get; set; }
         public ItemDetailPage ()
 		{
-			InitializeComponent ();
+			InitializeComponent();
 		}
 
         public ItemDetailPage(NewsInformation currentArticle)
