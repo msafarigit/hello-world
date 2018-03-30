@@ -19,7 +19,7 @@ namespace XamarinMastering.Data
 {
     /// <summary>
     /// Define Offline Sync Enabled
-    /// if "#define OFFLINE_SYNC_ENABLED" is commented this favorite is added to azure app;
+    /// if "#define OFFLINE_SYNC_ENABLED" is commented this favorite is added to azure server;
     /// </summary>
 
     public partial class FavoritesManager
@@ -38,7 +38,7 @@ namespace XamarinMastering.Data
             this.client = new MobileServiceClient(CoreConstants.ApplicationURL);
 
 #if OFFLINE_SYNC_ENABLED
-            var store = new MobileServiceSQLiteStore("localfavorites.db");
+            MobileServiceSQLiteStore store = new MobileServiceSQLiteStore("localfavorites.db");
             store.DefineTable<Favorite>();
             this.client.SyncContext.InitializeAsync(store);
             this.favoritesTable = client.GetSyncTable<Favorite>();
