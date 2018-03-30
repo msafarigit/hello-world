@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+             x:Class="XamarinMastering.Pages.TrendingPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{StaticResource RefreshNewsCommand}" CommandParameter="Trending" Text="Refresh" Order="Primary" Icon="icon_refresh.png" />
+    </ContentPage.ToolbarItems>
+
+    <ListView IsRefreshing="{Binding IsBusy}" SeparatorVisibility="None" ItemTapped="NewsListView_ItemTapped" ItemSelected="newsListView_ItemSelected" x:Name="newsListView" HasUnevenRows="True" ItemsSource="{Binding TrendingNews}" Margin="20">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.RowSpan="3"  WidthRequest="40"  HeightRequest="80" Source="{Binding ImageUrl}" Aspect="AspectFill" />
+
+                        <Label FontAttributes="{Binding Title, Converter={StaticResource LabelFontWeightConverter}}" Style="{DynamicResource ListTitleStyle}"  Grid.Column="1" Grid.Row="0" Text="{Binding Title}"/>
+                        <Label Style="{DynamicResource ListDescriptionStyle}"  Grid.Column="1" Grid.Row="1" Text="TOPIC:"/>
+                        <Label Style="{DynamicResource ListDescriptionStyle}" Grid.Column="1" Grid.Row="2" Text="{Binding Description}"/>
+
+                        <!--<Label VerticalOptions="Start" Margin="0,5" FontSize="Micro" Grid.Column="1" Grid.Row="3" Text="{Binding CreatedDate, StringFormat='UPDATED: {0:dddd h:mm tt} GMT'}" />-->
+                        <Label VerticalOptions="Start" Margin="0,5" FontSize="Micro" Grid.Column="1" Grid.Row="3" Text="{Binding CreatedDate, Converter={StaticResource AgoLabelConverter}}" />
+
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+
+
+    <!--<ListView x:Name="NewsListView" ItemsSource="{Binding}" Margin="20" >
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ImageCell DetailColor="Gray" TextColor="Black" ImageSource="{Binding ImageUrl}" Text="{Binding Title}" Detail="{Binding Description}"/>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>-->
+
+
+    <!--<StackLayout Spacing="1" Padding="5" Orientation="Vertical" x:Name="outerStack">
+        <ScrollView>
+            <StackLayout Spacing="5" HorizontalOptions="FillAndExpand" WidthRequest="1000">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Name: " WidthRequest="75" HorizontalOptions="Start" />
+                    <Entry Text="crossplatform.jpg" HorizontalOptions="FillAndExpand" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Date: " WidthRequest="75" HorizontalOptions="Start" />
+                    <Entry Text="07/05/2017" HorizontalOptions="FillAndExpand" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Tags:" WidthRequest="75" HorizontalOptions="Start" />
+                    <Entry Text="xamarin, workstations" HorizontalOptions="FillAndExpand" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Button Text="Save" HorizontalOptions="FillAndExpand" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+        <Image VerticalOptions="Start" Aspect="AspectFit" Source="/Content/nettrain.png" />
+    </StackLayout>-->
+</ContentPage>
+
+
+    

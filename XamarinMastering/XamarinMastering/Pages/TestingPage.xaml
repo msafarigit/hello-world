@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinMastering.Pages.TestingPage">
+
+    <ScrollView>
+        <StackLayout Padding="10">
+
+            <!--<Button Text="No Class" />
+            <Button Text="Button Class Default" StyleClass="Default" />
+            <Button Text="Button Class Primary" StyleClass="Primary" />
+            <Button Text="Button Class Success" StyleClass="Success" />
+            <Button Text="Button Class Info" StyleClass="Info" />
+            <Button Text="Button Class Warning" StyleClass="Warning" />
+            <Button Text="Button Class Danger" StyleClass="Danger" />
+            <Button Text="Button Class Link" StyleClass="Link" />
+            <Button Text="Button Class Default Small" StyleClass="Small" />
+            <Button Text="Button Class Default Large" StyleClass="Large" />-->
+
+            <!--These x:DynamicResource Exist in Xamarin Platform--> 
+            <Label Style="{x:DynamicResource TitleStyle}" Text="Title Style" />
+            <Label Style="{x:DynamicResource SubtitleStyle}" Text="Subtitle Style" />
+            <Label Style="{x:DynamicResource ListItemTextStyle}" Text="List Item Text Style" />
+            <Label Style="{x:DynamicResource ListItemDetailTextStyle}" Text="List Item Detail Text Style" />
+            <Label Style="{x:DynamicResource BodyStyle}" Text="Body Style" />
+            <Label Style="{x:DynamicResource CaptionStyle}" Text="Caption Style" />
+
+            <StackLayout VerticalOptions="FillAndExpand">
+                <Entry TextColor="White" x:Name="EntryStyleTrigger" Text="Tap To Identify">
+                    <Entry.Triggers><!--Only for outer entry-->
+                        <Trigger TargetType="Entry" Property="IsFocused" Value="True">
+                            <Setter Property="BackgroundColor" >
+                                <Setter.Value>
+                                    <OnPlatform x:TypeArguments="Color" iOS="#8860A8" Android="#8EC63F" WinPhone="#01AEF2" />
+                                </Setter.Value>
+                            </Setter>
+                            <!--<Setter Property="FontSize" >
+                                <Setter.Value>
+                                    <OnPlatform x:TypeArguments="Size" iOS="Large" Android="Large" WinPhone="Large" />
+                                </Setter.Value>
+                            </Setter>-->
+                            <Setter Property="Text">
+                                <Setter.Value>
+                                    <OnPlatform x:TypeArguments="x:String" iOS="iOS" Android="Android" WinPhone="WinPhone"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Entry.Triggers>
+                </Entry>
+                <Entry Text="Hello"/>
+            </StackLayout>
+            
+        </StackLayout>
+    </ScrollView>
+    
+</ContentPage>

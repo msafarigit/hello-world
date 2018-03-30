@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+             x:Class="XamarinMastering.Pages.SettingsPage" 
+             Title="Settings">
+
+    <ScrollView>
+
+        <StackLayout Margin="40">
+
+            <Label Style="{x:DynamicResource TitleStyle}" Text="Adjust your app settings and preferences as needed."/>
+            <Label Style="{x:DynamicResource SubtitleStyle}" Text="Maximum articles to display:"/>
+            <Slider x:Name="articleCountSlider" Minimum="0" Maximum="20"/>
+            <Label Style="{x:DynamicResource SubtitleStyle}" Text="Enter your display name:"/>
+            <Entry Text="{Binding CurrentUser.DisplayName, Mode=TwoWay}" /> <!-- By Default Two Way Binding -->
+            <Image HeightRequest="100" Source="{Binding CurrentUser.ProfileImageUrl}" Aspect="AspectFit"/>
+
+            <Label Style="{x:DynamicResource SubtitleStyle}" Text="Current OS:" />
+            <Label FontAttributes="Bold" Style="{x:DynamicResource SubtitleStyle}" Text="{Binding ExtendedPlatformLabel}"/>
+
+            <Label Style="{x:DynamicResource SubtitleStyle}" Text="Device Orientation" />
+            <Label FontAttributes="Bold" Style="{x:DynamicResource SubtitleStyle}" Text="{Binding CurrentOrientation}" />
+
+            <Label Style="{x:DynamicResource SubtitleStyle}" Text="My bio:"/>
+            <Editor Text="{Binding CurrentUser.BioContent}" HeightRequest="160" />
+            <Label Style="{x:DynamicResource SubtitleStyle}" Text="Select a default news category:"/>
+            <Picker TextColor="{DynamicResource ListTextColor}" x:Name="categoryPicker">
+                <Picker.Items>
+                    <x:String>Business</x:String>
+                    <x:String>Science and Technology</x:String>
+                    <x:String>Health</x:String>
+                    <x:String>Politics</x:String>
+                    <x:String>Entertainment</x:String>
+                    <x:String>Sports</x:String>
+                    <x:String>World</x:String>
+                </Picker.Items>
+            </Picker>
+            <Button Clicked="Button_Clicked" Text="Save" />
+        </StackLayout>
+    </ScrollView>
+
+
+    <!--<TableView HasUnevenRows="True" Intent="Settings">
+        <TableRoot>
+            <TableSection Title="Profile">
+                <EntryCell LabelColor="Black" Label="Enter your display name:" Text="" />
+                <ViewCell>
+                    <StackLayout Margin="0, 20, 0, 0"> --><!--left top right bottom--><!--
+                        <controls:CircleImage WidthRequest="50" HeightRequest="50" Aspect="AspectFit" Source="https://wintellectnow.blob.core.windows.net/public/Scott_Peterson.jpg" />
+                        --><!--<Image Margin="10" HorizontalOptions="Start" Aspect="AspectFit" Source="https://wintellectnow.blob.core.windows.net/public/Scott_Peterson.jpg" />--><!--
+                        <Label Text="My Bio:"/>
+                        <Editor HeightRequest="100" x:Name="BioEditor" />
+                    </StackLayout>
+                </ViewCell>
+            </TableSection>
+            <TableSection Title="Preferences">
+                <ViewCell>
+                    <StackLayout Margin="30, 0, 0, 0">
+                        <Label Text="Maximum articels to display:"/>
+                        <Slider x:Name="ArticleCountSlider" Minimum="0" Maximum="20"/>
+
+                        <Label Text="Select a default news category:"/>
+                        <Picker x:Name="CategoryPicker">
+                            <Picker.Items>
+                                <x:String>Business</x:String>
+                                <x:String>Science and Technology</x:String>
+                                <x:String>Health</x:String>
+                                <x:String>Politics</x:String>
+                                <x:String>Entertainment</x:String>
+                                <x:String>Sports</x:String>
+                                <x:String>World</x:String>
+                            </Picker.Items>
+                        </Picker>
+                        <Button Text="Save"/>
+                    </StackLayout>
+                </ViewCell>
+            </TableSection>
+        </TableRoot>
+    </TableView>-->
+
+    <!--<StackLayout Margin="10">
+        <TableView Intent="Menu">
+            <TableRoot>
+                <TableSection Title="Profile">
+                    <SwitchCell Text="Use Dispaly Name"/>
+                    <EntryCell Text="Display Name"/>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+    </StackLayout>-->
+
+    <!--<StackLayout Spacing="1" Padding="5" Orientation="Vertical" x:Name="outerStack">
+        <ScrollView>
+            <StackLayout>
+                <Label Style="{x:DynamicResource TitleStyle}" Text="Adjust your app settings and preferences as need."></Label>
+
+                --><!--<Label FontSize="Micro" Text="Maximum articles to display:" />--><!--
+                <Label Style="{x:DynamicResource SubtitleStyle}" Text="Maximum articles to display:" />
+                <Slider x:Name="articleCountSlider" Minimum="0" Maximum="20"/>
+
+                <Label Style="{x:DynamicResource TitleStyle}" FontSize="Micro" Text="Enter your display name:"/>
+                --><!--<Entry Style="{StaticResource LargeBlueEntryStyle}" x:Name="displayNameEntry"/>--><!--
+                <Entry x:Name="displayNameEntry"/>
+                <Entry FontSize="Micro" x:Name="displayNameEntry2"/>
+
+                <Image x:Name="profileImage" HeightRequest="100" Aspect="AspectFit"  />
+
+                <Label Style="{x:DynamicResource SubtitleStyle}" Text="My bio:"/>
+                <Editor FontSize="Micro" HeightRequest="100" x:Name="bioEditor"/>
+
+                <Label Style="{x:DynamicResource SubtitleStyle}" Text="Select default news category:"/>
+                <Picker x:Name="categoryPicker"> --><!--such as combo box--><!--
+                    <Picker.Items>
+                        <x:String>Business</x:String>
+                        <x:String>Science and Technology</x:String>
+                        <x:String>Health</x:String>
+                        <x:String>Politics</x:String>
+                        <x:String>Entertainment</x:String>
+                        <x:String>Sports</x:String>
+                        <x:String>World</x:String>
+                    </Picker.Items>
+                </Picker>
+
+                <Button Text="Save" />
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>-->
+</ContentPage>

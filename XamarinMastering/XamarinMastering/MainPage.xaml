@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:XamarinMastering"
+             xmlns:pages="clr-namespace:XamarinMastering.Pages"
+             x:Class="XamarinMastering.MainPage">
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Text="Style Test" Order="Primary" Clicked="StyleTest_Clicked" />
+        <ToolbarItem Command="{StaticResource NavigateToSettingsCommand}" CommandParameter="Xamarin Rocks!" Text="Settings" Icon="icon_settings.png" Order="Primary" />
+        <!--<ToolbarItem Text="Settings" Icon="icon_settings.png" Order="Primary" Clicked="ToolbarItem_Clicked" />-->
+    </TabbedPage.ToolbarItems>
+
+    <TabbedPage.Children>
+        <pages:WorldPage Icon="icon_world.png" Title="World"/>
+        <pages:TechnologyPage Icon="icon_technology.png" Title="Technology"/>
+        <pages:TrendingPage Icon="icon_trending.png" Title="Trending"/>
+        <pages:FavoritesPage Icon="icon_favorites.png" Title="Favs"/>
+    </TabbedPage.Children>
+
+</TabbedPage>

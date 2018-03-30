@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:command="clr-namespace:XamarinMastering.Common.Commands"
+             xmlns:converters="clr-namespace:XamarinMastering.Common.Converters"
+             x:Class="XamarinMastering.App">
+
+    <!--xmlns:light="clr-namespace:Xamarin.Forms.Themes;assembly=Xamarin.Forms.Theme.Light"
+        xmlns:dark="clr-namespace:Xamarin.Forms.Themes;assembly=Xamarin.Forms.Theme.Dark"-->
+
+    <Application.Resources>
+
+        <!-- Application resource dictionary -->
+        <!--<ResourceDictionary>
+            -->
+        <!--implicit every entry box in entire solution on every platform-->
+        <!--
+            <Style TargetType="Entry">
+                <Setter Property="FontSize" Value="Micro"/>
+                <Setter Property="TextColor" Value="Red"/>
+            </Style>
+
+            <Style x:Key="LargeBlueEntryStyle"  TargetType="Entry">
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="TextColor" Value="Blue"/>
+            </Style>
+        </ResourceDictionary>-->
+
+        <!--<ResourceDictionary MergedWith="dark:DarkThemeResources">-->
+        <ResourceDictionary>
+
+            <command:NavigateToSettingsCommand x:Key="NavigateToSettingsCommand" />
+            <command:RefreshNewsCommand x:Key="RefreshNewsCommand"/>
+            <command:SpeakCommand x:Key="SpeakCommand"/>
+            <command:ToggleFavoriteCommand x:Key="ToggleFavoriteCommand"/>
+
+            <converters:AgoLabelConverter x:Key="AgoLabelConverter" />
+            <converters:LabelFontWeightConverter x:Key="LabelFontWeightConverter" />
+
+            <Color x:Key="ListTextColor">#000000</Color>
+
+            <Style x:Key="ListTitleStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Start"/>
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="FontSize" Value="Small" />
+                <!--<Setter Property="TextColor" Value="#000000" />-->
+                <Setter Property="TextColor" Value="{DynamicResource ListTextColor}" />
+            </Style>
+
+            <Style x:Key="ListDescriptionStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Start" />
+                <!--<Setter Property="TextColor" Value="#000000" />-->
+                <Setter Property="TextColor" Value="{DynamicResource ListTextColor}" />
+                <Setter Property="FontSize" Value="Micro" />
+                <Setter Property="Opacity" Value=".4" />
+            </Style>
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>

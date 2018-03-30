@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinMastering.Pages.WorldPage"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+             Title="World">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{StaticResource RefreshNewsCommand}" CommandParameter="World" Text="Refresh" Order="Primary" Icon="icon_refresh.png" />
+    </ContentPage.ToolbarItems>
+    
+    <!--<ListView x:Name="NewsListView" ItemSelected="NewsListView_ItemSelected" HasUnevenRows="True" ItemsSource="{Binding}" Margin="20">-->
+    <ListView x:Name="NewsListView" IsRefreshing="{Binding IsBusy}" ItemTapped="NewsListView_ItemTapped" ItemSelected="NewsListView_ItemSelected" HasUnevenRows="True" ItemsSource="{Binding WorldNews}" Margin="20">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <controls:CircleImage Grid.RowSpan="2"  WidthRequest="40"  HeightRequest="40" Source="https://wintellectnow.blob.core.windows.net/public/Scott_Peterson.jpg" Aspect="AspectFill" />
+                        <!--<Image Margin="5" HeightRequest="50" WidthRequest="50" Grid.RowSpan="2" Source="{Binding ImageUrl}"/>-->
+                        <!--<Label FontSize="Small" Grid.Column="1" Grid.Row="0" Text="{Binding Title}"/>-->
+                        <!--<Label FontSize="Micro" VerticalTextAlignment="Start" VerticalOptions="Start" Grid.Column="1" Grid.Row="1" Text="{Binding Description}"/>-->
+
+                        <!-- 
+                            https://msdn.microsoft.com/en-gb/library/cc189045(v=vs.95).aspx
+                            https://docs.microsoft.com/en-us/dotnet/framework/wpf/advanced/staticresource-markup-extension
+                            A StaticResource will be resolved and assigned to the property during the loading of the XAML which occurs
+                            before the application is actually run. It will only be assigned once and any changes to resource dictionary ignored.
+                            
+                            https://msdn.microsoft.com/en-us/library/ms748942(v=vs.100).aspx
+                            https://docs.microsoft.com/en-us/dotnet/framework/wpf/advanced/dynamicresource-markup-extension
+                            A DynamicResource assigns an Expression object to the property during loading but does not actually lookup the resource
+                            until runtime when the Expression object is asked for the value. 
+                            This defers looking up the resource until it is needed at runtime. 
+                            A good example would be a forward reference to a resource defined later on in the XAML. 
+                            Another example is a resource that will not even exist until runtime. 
+                            It will update the target if the source resource dictionary is changed.
+                        -->
+                        <Label Style="{DynamicResource ListTitleStyle}" Grid.Column="1" Grid.Row="0" Text="{Binding Title}"/>
+                        <Label Style="{DynamicResource ListDescriptionStyle}" Grid.Column="1" Grid.Row="1" Text="{Binding Description}"/>
+
+                        <Label VerticalOptions="Start" Margin="0, 5" FontSize="Micro" Grid.Column="1" Grid.Row="2" Text="{Binding CreatedDate, StringFormat= 'UPDATED: {0:dddd h:mm tt} GMT' }" />
+
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinMastering.Pages.TechnologyPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{StaticResource RefreshNewsCommand}" CommandParameter="Technology" Text="Refresh" Order="Primary" Icon="icon_refresh.png" />
+    </ContentPage.ToolbarItems>
+
+    <ListView IsRefreshing="{Binding IsBusy}" SeparatorVisibility="None" ItemTapped="NewsListView_ItemTapped" x:Name="newsListView" HasUnevenRows="True" ItemsSource="{Binding TechnologyNews}" Margin="10">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.RowSpan="2" VerticalOptions="Start"  WidthRequest="40"  HeightRequest="80" Source="{Binding ImageUrl}" Aspect="Fill" />
+
+                        <Label Style="{DynamicResource ListTitleStyle}" Grid.Column="1" Grid.Row="0" Text="{Binding Title}"/>
+                        <Label Style="{DynamicResource ListDescriptionStyle}" Grid.Column="1" Grid.Row="1" Text="{Binding Description}"/>
+
+                        <Label VerticalOptions="Start" Margin="0,5" FontSize="Micro" Grid.Column="1" Grid.Row="2" Text="{Binding CreatedDate, StringFormat='UPDATED: {0:dddd h:mm tt} GMT'}" />
+
+
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>
