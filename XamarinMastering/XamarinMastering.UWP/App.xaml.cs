@@ -17,6 +17,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using XamarinMastering.Data;
+using Microsoft.WindowsAzure.MobileServices;
+using Windows.Networking.PushNotifications;
 
 namespace XamarinMastering.UWP
 {
@@ -88,26 +90,29 @@ namespace XamarinMastering.UWP
 
             //const string templateBodyWNS = "<toast><visual><binding template=\"ToastText01\"><text id=\"1\">$(messageParam)</text></binding></visual></toast>";
 
+            Push push = FavoritesManager.DefaultManager.CurrentClient.GetPush();
 
-            JObject headers = new JObject();
-            headers["X-WNS-Type"] = "wns/raw";
+            //JObject headers = new JObject();
+            //headers["X-WNS-Type"] = "wns/raw";
 
-            JObject templates = new JObject();
-            templates["genericMessage"] = new JObject
-                    {
-                        {"body", templateBodyWNS},
-                        {"headers", headers}
-                    };
+            //JObject templates = new JObject();
+            //templates["genericMessage"] = new JObject
+            //        {
+            //            {"body", templateBodyWNS},
+            //            {"headers", headers}
+            //        };
 
-            var push = FavoritesManager.DefaultManager.CurrentClient.GetPush();
-            await push.RegisterAsync(channel.Uri, templates);
+            //await push.RegisterAsync(channel.Uri, templates);
 
+            await push.RegisterTemplateAsync(channel.Uri, templateBodyWNS, "body");
             channel.PushNotificationReceived += OnNotificationReceived;
         }
 
         private void OnNotificationReceived(PushNotificationChannel sender, PushNotificationReceivedEventArgs args)
         {
-            Helpers.ToastHelper.ProcessNotification(args);
+            //args.NotificationType
+            //args.RawNotification
+            //Helpers.ToastHelper.ProcessNotification(args);
         }
 
 
