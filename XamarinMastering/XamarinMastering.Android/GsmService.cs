@@ -115,6 +115,7 @@ namespace XamarinMastering.Droid
         {
             try
             {
+                //messageParam: is defined in edit favorite script from azure
                 const string templateBodyGCM = "{\"data\":{\"message\":\"$(messageParam)\"}}";
 
                 //JObject templates = new JObject();

@@ -65,6 +65,7 @@ namespace XamarinMastering.iOS
 
         public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         {
+            //messageParam: is defined in edit favorite script from azure
             const string templateBodyAPNS = "{\"aps\":{\"alert\":\"$(messageParam)\"}}";
 
             JObject templates = new JObject();

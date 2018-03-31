@@ -84,10 +84,10 @@ namespace XamarinMastering.UWP
 
         private async Task InitNotificationsAsync()
         {
-            var channel = await Windows.Networking.PushNotifications.PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
+            PushNotificationChannel channel = await Windows.Networking.PushNotifications.PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
 
+            //messageParam: is defined in edit favorite script from azure
             const string templateBodyWNS = "{\"message\":\"$(messageParam)\"}";
-
             //const string templateBodyWNS = "<toast><visual><binding template=\"ToastText01\"><text id=\"1\">$(messageParam)</text></binding></visual></toast>";
 
             Push push = FavoritesManager.DefaultManager.CurrentClient.GetPush();
