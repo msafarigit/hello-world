@@ -12,5 +12,6 @@ namespace XamarinMastering.Common
         //"f8cdef31-a31e-4b4a-93e4-5f571e91255a";//"044c13fdddeb41bea9b756e05e7b1b09";
 
         public static string ApplicationURL = @"http://[your azure mobile app].azurewebsites.net";
+        public static string GcmRemoteId = "[YOUR FIREBASE CLOUD MESSAGING REMOTE ID]";
     }
 }
