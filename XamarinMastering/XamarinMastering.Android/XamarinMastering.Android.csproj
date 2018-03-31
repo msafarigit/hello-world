@@ -41,7 +41,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GCM.Client">
-      <HintPath>D:\EB\21-Mobile Development\Xamarin knowledge\Android\GCMClient-1.0\lib\android\GCM.Client.dll</HintPath>
+      <HintPath>D:\EB\21-Mobile Development\Xamarin knowledge\Android\GCMClient-1.0\android\GCM.Client.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="System" />

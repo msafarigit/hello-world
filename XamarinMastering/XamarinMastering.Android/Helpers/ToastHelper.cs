@@ -27,10 +27,10 @@ namespace XamarinMastering.Droid.Helpers
                                                .SetContentTitle(title)
                                                .SetContentText(description)
                                                .SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Notification))
-                                               .SetAutoCancel(true).Build();
+                                               .SetAutoCancel(true)
+                                               .Build();
 
             notificationManager.Notify(1, notification);
         }
-
     }
 }

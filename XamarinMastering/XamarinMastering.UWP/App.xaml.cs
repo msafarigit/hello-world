@@ -112,7 +112,9 @@ namespace XamarinMastering.UWP
         {
             //args.NotificationType
             //args.RawNotification
-            //Helpers.ToastHelper.ProcessNotification(args);
+
+            //responding to the notification: show to device
+            Helpers.ToastHelper.ProcessNotification(args);
         }
 
 

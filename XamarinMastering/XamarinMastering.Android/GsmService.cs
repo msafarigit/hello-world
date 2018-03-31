@@ -79,17 +79,17 @@ namespace XamarinMastering.Droid
             edit.PutString("last_msg", msg.ToString());
             edit.Commit();
 
+            //responding to the notification: show to device
             CreateNotification(title, "A new Favorite has been added");
 
             return;
-
         }
 
         async void CreateNotification(string title, string description)
         {
-            var notificationManager = GetSystemService(Context.NotificationService) as NotificationManager;
+            NotificationManager notificationManager = GetSystemService(Context.NotificationService) as NotificationManager;
 
-            var uiIntent = new Intent(this, typeof(MainActivity));
+            Intent uiIntent = new Intent(this, typeof(MainActivity));
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
@@ -100,15 +100,14 @@ namespace XamarinMastering.Droid
 
             Android.Graphics.Bitmap largeIcon = await Android.Graphics.BitmapFactory.DecodeResourceAsync(Resources, XamarinMastering.Droid.Resource.Drawable.icon, options);
 
+            //responding to the notification: show to device
             ToastHelper.ProcessNotification(this, notificationManager, uiIntent, builder, title, description, largeIcon);
         }
 
         protected override void OnRegistered(Context context, string registrationId)
         {
             RegistrationID = registrationId;
-
             Push push = FavoritesManager.DefaultManager.CurrentClient.GetPush();
-
             MainActivity.CurrentActivity.RunOnUiThread(() => Register(push, null));
         }
 
@@ -131,7 +130,6 @@ namespace XamarinMastering.Droid
             }
             catch (Exception ex)
             {
-
             }
         }
 

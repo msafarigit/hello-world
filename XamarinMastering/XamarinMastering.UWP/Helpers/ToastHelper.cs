@@ -32,10 +32,9 @@ namespace XamarinMastering.UWP.Helpers
 
             ToastNotification toast = new ToastNotification(payload);
 
-            var notifier = Windows.UI.Notifications.ToastNotificationManager.CreateToastNotifier();
+            ToastNotifier notifier = Windows.UI.Notifications.ToastNotificationManager.CreateToastNotifier();
 
             notifier.Show(toast);
-
         }
 
         public static void SendNotificationToast(string title, string description)
@@ -57,7 +56,7 @@ namespace XamarinMastering.UWP.Helpers
 
             ToastNotification toast = new ToastNotification(payload);
 
-            var notifier = Windows.UI.Notifications.ToastNotificationManager.CreateToastNotifier();
+            ToastNotifier notifier = Windows.UI.Notifications.ToastNotificationManager.CreateToastNotifier();
 
             notifier.Show(toast);
         }
