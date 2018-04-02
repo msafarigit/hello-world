@@ -1,5 +1,6 @@
 ﻿using System;
- 
+using XamarinMastering.Common;
+
 namespace XamarinMastering.News
 {
     public enum NewsCategoryType
@@ -13,12 +14,21 @@ namespace XamarinMastering.News
         World
     }
 
-    public class NewsInformation
+    public class NewsInformation : ObservableBase
     {
         public string Title { get; set; }
         public string Description { get; set; }
         public string ImageUrl { get; set; }
+        public string Url { get; set; }
         public DateTime CreatedDate { get; set; }
+        public string Category { get; set; }
+
+        private bool _isRead;
+        public bool IsRead
+        {
+            get { return this._isRead; }
+            set { this.SetProperty(ref this._isRead, value); }
+        }
     }
 
     public class NewsResult

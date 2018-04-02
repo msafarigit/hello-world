@@ -21,7 +21,7 @@ namespace XamarinMastering.UWP.Helpers
                                 "<visual>" +
                                     "<binding template=\"ToastGeneric\">" +
                                     "<image placement=\"appLogoOverride\" hint-crop=\"circle\" src=\"ms-appx:///Assets/pb_toastlogo.png\"/>" +
-                                        "<text>Welcome to Paperboy!</text>" +
+                                        "<text>Welcome to Xamarin Mastering!</text>" +
                                         "<text>The coolest Xamarin Forms news reader in the Universe!</text>" +
                                         "<text placement=\"attribution\">WintellectNOW</text>" +
                                     "</binding>" +
@@ -73,7 +73,7 @@ namespace XamarinMastering.UWP.Helpers
 
             builder.Name = taskName;
 
-            builder.TaskEntryPoint = "Paperboy.UWP.Services.Background.PushListener";
+            builder.TaskEntryPoint = "XamarinMastering.UWP.Services.Background.PushListener";
 
             builder.SetTrigger(new PushNotificationTrigger());
 

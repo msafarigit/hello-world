@@ -24,6 +24,7 @@ namespace XamarinMastering.ViewModels
         private MainViewModel()
         {
             this.WorldNews = new ObservableCollection<NewsInformation>();
+            this.SearchResults = new ObservableCollection<News.NewsInformation>();
             this.TechnologyNews = new ObservableCollection<NewsInformation>();
             this.TrendingNews = new ObservableCollection<NewsInformation>();
             this.Favorites = new FavoritesCollection();
@@ -34,6 +35,15 @@ namespace XamarinMastering.ViewModels
                 BioContent = "Scott has been developing Microsoft Enterprise solutions for organizations around the world for the last 28 years, and the Senior Architect & Developer behind Liquid Daffodil",
                 ProfileImageUrl = "https://wintellectnow.blob.core.windows.net/public/Scott_Peterson.jpg"
             };
+
+            this.SearchQuery = "Microsoft";
+        }
+
+        private string searchQuery;
+        public string SearchQuery
+        {
+            get { return this.searchQuery; }
+            set { this.SetProperty(ref this.searchQuery, value); }
         }
 
         public static MainViewModel GetViewModel()
@@ -58,6 +68,13 @@ namespace XamarinMastering.ViewModels
         {
             get { return this._worldNews; }
             set { this.SetProperty(ref this._worldNews, value); }
+        }
+
+        private ObservableCollection<News.NewsInformation> _searchResults;
+        public ObservableCollection<News.NewsInformation> SearchResults
+        {
+            get { return this._searchResults; }
+            set { this.SetProperty(ref this._searchResults, value); }
         }
 
         private ObservableCollection<NewsInformation> _technologyNews;
@@ -139,6 +156,19 @@ namespace XamarinMastering.ViewModels
             var trendingNews = await NewsHelper.GetTrendingAsync();
             foreach (var news in trendingNews)
                 this.TrendingNews.Add(news);
+        }
+
+        public async Task RefreshSearchResults()
+        {
+            this.IsBusy = true;
+            this.SearchResults.Clear();
+            string query = this.SearchQuery;
+
+            var news = await Helpers.NewsHelper.SearchAsync(query);
+            foreach (var item in news)
+                this.SearchResults.Add(item);
+
+            this.IsBusy = false;
         }
 
         public async Task RefreshTechnologyNewsAsync()
