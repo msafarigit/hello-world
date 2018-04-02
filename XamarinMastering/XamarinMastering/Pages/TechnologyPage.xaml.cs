@@ -34,9 +34,9 @@ namespace XamarinMastering.Pages
         //    newsListView.IsRefreshing = false;
         //}
 
-        public void NewsListView_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            new NavigateToDetailCommand().Execute(e.Item as NewsInformation);
-        }
+        //public void NewsListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        //{
+        //    new NavigateToDetailCommand().Execute(e.Item as NewsInformation);
+        //}
     }
 }

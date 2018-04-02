@@ -50,15 +50,15 @@ namespace XamarinMastering.Helpers
                     int descriptionCounter = 0, titleCounter = 0;
                     return new List<NewsInformation>
                     {
-                        new NewsInformation { Title = $"Trump uses 'no collusion' 7 times in a single Russia answer", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" }
+                        new NewsInformation { Title = $"Trump uses 'no collusion' 7 times in a single Russia answer", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetByCategoryAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" }
                     };
                 });
                 if (task.Wait(TimeSpan.FromSeconds(10)))
@@ -152,8 +152,26 @@ namespace XamarinMastering.Helpers
             }
             catch (Exception ex)
             {
-
-                throw;
+                Task<List<NewsInformation>> task = Task.Run(() =>
+                {
+                    int descriptionCounter = 0, titleCounter = 0;
+                    return new List<NewsInformation>
+                    {
+                        new NewsInformation { Title = $"Trump uses 'no collusion' 7 times in a single Russia answer", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(SearchAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(SearchAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(SearchAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(SearchAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(SearchAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(SearchAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(SearchAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(SearchAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" }
+                    };
+                });
+                if (task.Wait(TimeSpan.FromSeconds(10)))
+                    return task.Result;
+                else
+                    return new List<NewsInformation>();
             }
         }
 
@@ -192,15 +210,15 @@ namespace XamarinMastering.Helpers
                     int descriptionCounter = 0, titleCounter = 0;
                     return new List<NewsInformation>
                     {
-                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now.AddHours(-2), Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" },
-                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "app" }
+                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now.AddHours(-2), Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" },
+                        new NewsInformation { Title = $"{nameof(GetTrendingAsync)} {titleCounter++}", CreatedDate = DateTime.Now, Description = $"{nameof(NewsInformation)} {descriptionCounter++}", ImageUrl = "/icon.png" }
                     };
                 });
                 if (task.Wait(TimeSpan.FromSeconds(20)))

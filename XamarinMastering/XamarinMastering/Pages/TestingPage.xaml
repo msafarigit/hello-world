@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:XamarinMastering"
              x:Class="XamarinMastering.Pages.TestingPage">
 
     <ScrollView>
         <StackLayout Padding="10">
 
-            <!--<Button Text="No Class" />
+            <Button Text="No Class" />
             <Button Text="Button Class Default" StyleClass="Default" />
             <Button Text="Button Class Primary" StyleClass="Primary" />
             <Button Text="Button Class Success" StyleClass="Success" />
@@ -15,7 +16,7 @@
             <Button Text="Button Class Danger" StyleClass="Danger" />
             <Button Text="Button Class Link" StyleClass="Link" />
             <Button Text="Button Class Default Small" StyleClass="Small" />
-            <Button Text="Button Class Default Large" StyleClass="Large" />-->
+            <Button Text="Button Class Default Large" StyleClass="Large" />
 
             <!--These x:DynamicResource Exist in Xamarin Platform--> 
             <Label Style="{x:DynamicResource TitleStyle}" Text="Title Style" />
@@ -48,6 +49,12 @@
                     </Entry.Triggers>
                 </Entry>
                 <Entry Text="Hello"/>
+
+                <Entry >
+                    <Entry.Behaviors>
+                        <local:NumericValidationBehavior/>
+                    </Entry.Behaviors>
+                </Entry>
             </StackLayout>
             
         </StackLayout>

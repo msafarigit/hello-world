@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XamarinMastering.Extensions;
+using XamarinMastering.Models;
 using XamarinMastering.News;
 
 namespace XamarinMastering.Pages
@@ -23,6 +25,12 @@ namespace XamarinMastering.Pages
         {
             InitializeComponent();
             this.CurrentArticle = currentArticle;
+        }
+
+        public ItemDetailPage(FavoriteInformation currentArticle)
+        {
+            InitializeComponent();
+            this.CurrentArticle = currentArticle.AsArticle();
         }
 
         protected override void OnAppearing()

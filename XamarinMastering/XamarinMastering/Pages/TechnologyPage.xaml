@@ -1,13 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:XamarinMastering"
              x:Class="XamarinMastering.Pages.TechnologyPage">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{StaticResource RefreshNewsCommand}" CommandParameter="Technology" Text="Refresh" Order="Primary" Icon="icon_refresh.png" />
     </ContentPage.ToolbarItems>
 
-    <ListView IsRefreshing="{Binding IsBusy}" SeparatorVisibility="None" ItemTapped="NewsListView_ItemTapped" x:Name="newsListView" HasUnevenRows="True" ItemsSource="{Binding TechnologyNews}" Margin="10">
+    <ListView x:Name="newsListView" IsRefreshing="{Binding IsBusy}" ItemsSource="{Binding TechnologyNews}" SeparatorVisibility="None" HasUnevenRows="True" Margin="10">
+        <ListView.Behaviors>
+            <local:EventToCommandBehavior 
+                    EventName="ItemTapped" 
+                    Command="{StaticResource NavigateToDetailCommand}" 
+                    Converter="{StaticResource SelectedItemConverter}"/>
+        </ListView.Behaviors>
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
@@ -21,7 +28,7 @@
                             <RowDefinition />
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Image Grid.RowSpan="2" VerticalOptions="Start"  WidthRequest="40"  HeightRequest="80" Source="{Binding ImageUrl}" Aspect="Fill" />
+                        <Image Grid.RowSpan="2" VerticalOptions="Start" WidthRequest="80" HeightRequest="80" Source="{Binding ImageUrl}" Aspect="Fill" />
 
                         <Label Style="{DynamicResource ListTitleStyle}" Grid.Column="1" Grid.Row="0" Text="{Binding Title}"/>
                         <Label Style="{DynamicResource ListDescriptionStyle}" Grid.Column="1" Grid.Row="1" Text="{Binding Description}"/>

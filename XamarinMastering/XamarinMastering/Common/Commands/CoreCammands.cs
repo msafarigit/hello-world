@@ -90,12 +90,26 @@ namespace XamarinMastering.Common.Commands
 
         public void Execute(object parameter)
         {
-            NavigateToDetailAsync(parameter as NewsInformation);
+            NewsInformation newsInformation = parameter as News.NewsInformation;
+
+            if (newsInformation == null)
+            {
+                NavigateToDetailAsync(parameter as FavoriteInformation);
+            }
+            else
+            {
+                NavigateToDetailAsync(newsInformation);
+            }
         }
 
-        private async void NavigateToDetailAsync(NewsInformation newsInformation)
+        private async void NavigateToDetailAsync(News.NewsInformation article)
         {
-            await App.MainNavigation.PushAsync(new ItemDetailPage(newsInformation), true);
+            await App.MainNavigation.PushAsync(new Pages.ItemDetailPage(article), true);
+        }
+
+        private async void NavigateToDetailAsync(FavoriteInformation article)
+        {
+            await App.MainNavigation.PushAsync(new Pages.ItemDetailPage(article), true);
         }
     }
 
