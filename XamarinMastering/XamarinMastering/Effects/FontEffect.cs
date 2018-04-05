@@ -5,6 +5,7 @@ using Xamarin.Forms;
 
 namespace XamarinMastering
 {
+    //To have dynamic fonts get load up
     public static class CustomFontEffect
     {
         class FontEffect : RoutingEffect
@@ -15,6 +16,7 @@ namespace XamarinMastering
         }
 
         public static readonly BindableProperty FontFileNameProperty = BindableProperty.CreateAttached("FontFileName", typeof(string), typeof(CustomFontEffect), "", propertyChanged: OnFileNameChanged);
+
         public static string GetFontFileName(BindableObject view)
         {
             return (string)view.GetValue(FontFileNameProperty);
@@ -27,11 +29,10 @@ namespace XamarinMastering
 
         static void OnFileNameChanged(BindableObject bindable, object oldValue, object newValue)
         {
-            var view = bindable as View;
+            View view = bindable as View;
             if (view == null)
-            {
                 return;
-            }
+
             view.Effects.Add(new FontEffect());
         }
     }

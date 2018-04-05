@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:XamarinMastering" 
              x:Class="XamarinMastering.Pages.ItemDetailPage">
 
     <ContentPage.ToolbarItems>
@@ -16,6 +17,11 @@
                                Text="{Binding CreatedDate, StringFormat='UPDATED: {0:dddd h:mm tt} GMT'}" />
 
         <Button Text="Read Article" Command="{StaticResource SpeakCommand}" CommandParameter="{Binding Title}" />
+        <Label HorizontalOptions="Center" VerticalOptions="Start" Text="View Article">
+            <Label.Effects>
+                <local:HyperlinkEffect/>
+            </Label.Effects>
+        </Label>
 
     </StackLayout>
 </ContentPage>

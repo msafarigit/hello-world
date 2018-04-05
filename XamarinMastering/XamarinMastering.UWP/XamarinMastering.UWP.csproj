@@ -96,6 +96,9 @@
     <Compile Include="DependencyServices\FileHelper.cs" />
     <Compile Include="DependencyServices\PlatformLabel.cs" />
     <Compile Include="DependencyServices\TextSpeecher.cs" />
+    <Compile Include="Effects\FocusEffect.cs" />
+    <Compile Include="Effects\FontEffect.cs" />
+    <Compile Include="Effects\HyperlinkEffect.cs" />
     <Compile Include="Helpers\ColorHelper.cs" />
     <Compile Include="Helpers\ToastHelper.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -109,6 +112,9 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\Fonts\ARISTA LIGHT.TTF" />
+    <Content Include="Assets\Fonts\ARISTA.TTF" />
+    <Content Include="Assets\Fonts\Lobster-Regular.ttf" />
     <None Include="XamarinMastering.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

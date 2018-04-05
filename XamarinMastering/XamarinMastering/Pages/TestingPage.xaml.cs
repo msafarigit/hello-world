@@ -16,5 +16,11 @@ namespace XamarinMastering.Pages
 		{
 			InitializeComponent ();
 		}
-	}
+
+        protected override void OnAppearing()
+        {
+            this.BindingContext = App.ViewModel.CurrentUser;
+            base.OnAppearing();
+        }
+    }
 }

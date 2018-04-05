@@ -7,7 +7,7 @@
     <ScrollView>
         <StackLayout Padding="10">
 
-            <Button Text="No Class" />
+            <!--<Button Text="No Class" />
             <Button Text="Button Class Default" StyleClass="Default" />
             <Button Text="Button Class Primary" StyleClass="Primary" />
             <Button Text="Button Class Success" StyleClass="Success" />
@@ -16,7 +16,7 @@
             <Button Text="Button Class Danger" StyleClass="Danger" />
             <Button Text="Button Class Link" StyleClass="Link" />
             <Button Text="Button Class Default Small" StyleClass="Small" />
-            <Button Text="Button Class Default Large" StyleClass="Large" />
+            <Button Text="Button Class Default Large" StyleClass="Large" />-->
 
             <!--These x:DynamicResource Exist in Xamarin Platform--> 
             <Label Style="{x:DynamicResource TitleStyle}" Text="Title Style" />
@@ -48,12 +48,27 @@
                         </Trigger>
                     </Entry.Triggers>
                 </Entry>
-                <Entry Text="Hello"/>
 
-                <Entry >
+                <Label FontSize="Medium" FontFamily="" Text="Enter a search query" local:CustomFontEffect.FontFileName="Neon">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <OnPlatform.iOS>Lobster-Regular</OnPlatform.iOS>
+                            <OnPlatform.Android>Neon</OnPlatform.Android>
+                            <OnPlatform.WinPhone>/Assets/Fonts/ARISTA.ttf#[z] ARISTA</OnPlatform.WinPhone>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+
+                <Entry Text="{Binding DispalyName}">
                     <Entry.Behaviors>
                         <local:NumericValidationBehavior/>
                     </Entry.Behaviors>
+                </Entry>
+
+                <Entry Text="Hello">
+                    <Entry.Effects>
+                        <local:FocusEffect />
+                    </Entry.Effects>
                 </Entry>
             </StackLayout>
             
