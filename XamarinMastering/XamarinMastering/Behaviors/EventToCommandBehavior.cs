@@ -75,7 +75,7 @@ namespace XamarinMastering
             if (eventInfo == null)
                 throw new ArgumentException($"{nameof(EventToCommandBehavior)}: Can't register the '{EventName}' event.");
 
-            MethodInfo methodInfo = typeof(EventToCommandBehavior).GetTypeInfo().GetDeclaredMethod("OnEvent");
+            MethodInfo methodInfo = typeof(EventToCommandBehavior).GetTypeInfo().GetDeclaredMethod(nameof(OnEvent));
             eventHandler = methodInfo.CreateDelegate(eventInfo.EventHandlerType, this);
             eventInfo.AddEventHandler(AssociatedObject, eventHandler);
         }
