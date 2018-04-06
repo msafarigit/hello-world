@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Navigation;
 using XamarinMastering.Data;
 using Microsoft.WindowsAzure.MobileServices;
 using Windows.Networking.PushNotifications;
+using System.Net.Http;
 
 namespace XamarinMastering.UWP
 {
@@ -44,10 +45,12 @@ namespace XamarinMastering.UWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-            await InitNotificationsAsync();
+            //Part 9: Adding Tagging Support: Pre-provisioned
+            Helpers.ToastHelper.RegisterPushListenerTask();
 
-            //Helpers.ToastHelper.RegisterPushListenerTask();
-
+            //Part: 7 Push Notification
+            //await InitNotificationsAsync();
+            ////Helpers.ToastHelper.RegisterPushListenerTask();
 
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -78,44 +81,112 @@ namespace XamarinMastering.UWP
                 // parameter
                 rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
+
+            //Part 9: Adding Tagging Support: Pre-provisioned
+            await RegisterForPushNotificationsAsync(FavoritesManager.DefaultManager.CurrentClient);
+
             // Ensure the current window is active
             Window.Current.Activate();
         }
 
-        private async Task InitNotificationsAsync()
+        //Part: 7 Push Notification
+        //private async Task InitNotificationsAsync()
+        //{
+        //    PushNotificationChannel channel = await Windows.Networking.PushNotifications.PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
+
+        //    //messageParam: is defined in edit favorite script from azure
+        //    const string templateBodyWNS = "{\"message\":\"$(messageParam)\"}";
+        //    //const string templateBodyWNS = "<toast><visual><binding template=\"ToastText01\"><text id=\"1\">$(messageParam)</text></binding></visual></toast>";
+
+        //    Push push = FavoritesManager.DefaultManager.CurrentClient.GetPush();
+
+        //    JObject headers = new JObject();
+        //    headers["X-WNS-Type"] = "wns/raw";
+
+        //    JObject templates = new JObject();
+        //    templates["genericMessage"] = new JObject
+        //            {
+        //                {"body", templateBodyWNS},
+        //                {"headers", headers}
+        //            };
+
+        //    await push.RegisterAsync(channel.Uri, templates);
+        //    channel.PushNotificationReceived += OnNotificationReceived;
+        //}
+
+        //Part: 7 Push Notification
+        //private void OnNotificationReceived(PushNotificationChannel sender, PushNotificationReceivedEventArgs args)
+        //{
+        //    //args.NotificationType
+        //    //args.RawNotification
+
+        //    //responding to the notification: show to device
+        //    Helpers.ToastHelper.ProcessNotification(args);
+        //}
+
+        //Part 9: Adding Tagging Support: Pre-provisioned
+        public async Task RegisterForPushNotificationsAsync(MobileServiceClient client)
         {
-            PushNotificationChannel channel = await Windows.Networking.PushNotifications.PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
+            PushNotificationChannel channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
 
-            //messageParam: is defined in edit favorite script from azure
-            const string templateBodyWNS = "{\"message\":\"$(messageParam)\"}";
-            //const string templateBodyWNS = "<toast><visual><binding template=\"ToastText01\"><text id=\"1\">$(messageParam)</text></binding></visual></toast>";
+            if (channel != null)
+            {
+                try
+                {
+                    string registrationId = channel.Uri.ToString();
+                    DeviceInstallation installation = new DeviceInstallation
+                    {
+                        InstallationId = client.InstallationId,
+                        Platform = "wns",
+                        PushChannel = registrationId
+                    };
 
-            Push push = FavoritesManager.DefaultManager.CurrentClient.GetPush();
+                    var genericTemplate = new WindowsPushTemplate
+                    {
+                        Body = "{\"message\":\"$(messageParam)\"}"
+                    };
 
-            //JObject headers = new JObject();
-            //headers["X-WNS-Type"] = "wns/raw";
+                    genericTemplate.Headers.Add("X-WNS-Type", "wns/raw");
+                    installation.Templates.Add("genericTemplate", genericTemplate);
 
-            //JObject templates = new JObject();
-            //templates["genericMessage"] = new JObject
-            //        {
-            //            {"body", templateBodyWNS},
-            //            {"headers", headers}
-            //        };
+                    var discussionTemplate = new WindowsPushTemplate
+                    {
+                        Body = "{\"message\":\"$(content)\"}"
+                    };
 
-            //await push.RegisterAsync(channel.Uri, templates);
+                    discussionTemplate.Headers.Add("X-WNS-Type", "wns/raw");
+                    installation.Templates.Add("discussionTemplate", discussionTemplate);
 
-            await push.RegisterTemplateAsync(channel.Uri, templateBodyWNS, "body");
-            channel.PushNotificationReceived += OnNotificationReceived;
+                    //List<string> extraTags = new List<string>();
+                    //Tag: specific device received this notification
+                    //extraTags.Add("Windows");
+                    //installation.Tags = extraTags;
+
+                    DeviceInstallation recordedInstallation = await client.InvokeApiAsync<DeviceInstallation, DeviceInstallation>($"/push/installations/{client.InstallationId}", installation, HttpMethod.Put, new Dictionary<string, string>());
+
+                    List<string> extraTags = new List<string>();
+                    extraTags.Add(XamarinMastering.Helpers.RegistrationHelper.CurrentPlatformId);
+
+                    await XamarinMastering.Helpers.RegistrationHelper.UpdateInstallationTagsAsync(client.InstallationId, extraTags);
+
+                    channel.PushNotificationReceived += OnNotificationReceived;
+                }
+                catch (Exception ex)
+                {
+                }
+
+                return;
+            }
         }
 
         private void OnNotificationReceived(PushNotificationChannel sender, PushNotificationReceivedEventArgs args)
         {
-            //args.NotificationType
-            //args.RawNotification
+            if (args.NotificationType == PushNotificationType.Raw)
+                args.Cancel = true;
 
-            //responding to the notification: show to device
             Helpers.ToastHelper.ProcessNotification(args);
         }
+
 
 
         /// <summary>
@@ -137,7 +208,7 @@ namespace XamarinMastering.UWP
         /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
-            var deferral = e.SuspendingOperation.GetDeferral();
+            SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }

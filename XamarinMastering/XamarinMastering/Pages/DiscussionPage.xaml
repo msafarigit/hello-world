@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" Title="New Discussion"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:local="clr-namespace:Paperboy" 
+             x:Class="XamarinMastering.Pages.DiscussionPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Clear" Priority="0" Order="Primary" />
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+
+        <Label Margin="20,10,20,0" FontSize="Medium" Text="{Binding CurrentDiscussion.InDiscussionUser.Description, StringFormat='In discussion with {0}:'}"/>
+        <Label Grid.Row="1" Margin="20,0" FontAttributes="Bold" FontSize="Medium" Text="{Binding CurrentArticle.Title}"/>
+
+        <ListView Grid.Row="2" IsRefreshing="{Binding IsBusy}" SeparatorVisibility="None" x:Name="discussionListView" HasUnevenRows="True" ItemsSource="{Binding CurrentDiscussion}" Margin="10,10,10,0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame Margin="10,10,10,0" BackgroundColor="#0059B2" OutlineColor="Transparent" HasShadow="False">
+                            <StackLayout>
+                                <Label TextColor="White" Text="{Binding Content}"/>
+                                <Grid MinimumHeightRequest="30" HorizontalOptions="Fill">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label FontAttributes="Bold" Grid.Column="0" FontSize="10" TextColor="White" Text="{Binding SenderId, Converter={StaticResource DiscussionIdToLabelConverter}}"/>
+                                    <Label Grid.Column="1" HorizontalOptions="End" FontSize="10" TextColor="White" Text="{Binding Timestamp, StringFormat='{0:h:mm tt}'}"/>
+                                </Grid>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Grid Margin="20,0,20,40" VerticalOptions="Fill" HorizontalOptions="Fill" Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Editor Text="{Binding CurrentMessage}" VerticalOptions="Fill" HorizontalOptions="Fill">
+                <Editor.Behaviors>
+                    <local:EditorLengthValidatorBehavior MaxLength="120" />
+                </Editor.Behaviors>
+            </Editor>
+            <Image Aspect="AspectFill" x:Name="sendButton" Source="icon_send.png" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="End"/>
+
+        </Grid>
+    </Grid>
+
+
+</ContentPage>

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Net.Http;
+using System.Threading.Tasks;
 using Foundation;
 using Microsoft.WindowsAzure.MobileServices;
 using Newtonsoft.Json.Linq;
@@ -23,6 +24,9 @@ namespace XamarinMastering.iOS
         //
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
+
+        public static NSData PushDeviceToken { get; private set; } = null;
+
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
@@ -63,28 +67,39 @@ namespace XamarinMastering.iOS
             UIApplication.SharedApplication.RegisterForRemoteNotifications();
         }
 
-        public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
+        public override async void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         {
-            //messageParam: is defined in edit favorite script from azure
-            const string templateBodyAPNS = "{\"aps\":{\"alert\":\"$(messageParam)\"}}";
+            //Part: 7 Push Notification
+            //            //messageParam: is defined in edit favorite script from azure
+            //            const string templateBodyAPNS = "{\"aps\":{\"alert\":\"$(messageParam)\"}}";
 
-            JObject templates = new JObject();
-            templates["genericMessage"] = new JObject
-             {
-               {"body", templateBodyAPNS}
-             };
+            //            JObject templates = new JObject();
+            //            templates["genericMessage"] = new JObject
+            //                        {
+            //                           {"body", templateBodyAPNS}
+            //                        };
 
-            Push push = FavoritesManager.DefaultManager.CurrentClient.GetPush();
+            //            Push push = FavoritesManager.DefaultManager.CurrentClient.GetPush();
 
-#pragma warning disable CS1701 // Assuming assembly reference matches identity
-            //push.RegisterAsync(deviceToken, templates);
-            push.RegisterTemplateAsync(deviceToken, templates.ToString(), string.Empty, "body");
-#pragma warning restore CS1701 // Assuming assembly reference matches identity
+            //#pragma warning disable CS1701 // Assuming assembly reference matches identity
+            //            push.RegisterAsync(deviceToken, templates);
+            //#pragma warning restore CS1701 // Assuming assembly reference matches identity
+
+            //Part 9: Adding Tagging Support:  Pre-provisioned
+            AppDelegate.PushDeviceToken = deviceToken;
+            await RegisterForPushNotifications(FavoritesManager.DefaultManager.CurrentClient);
         }
 
         public override void FailedToRegisterForRemoteNotifications(UIApplication application, NSError error)
         {
+            UpdateRegistration(FavoritesManager.DefaultManager.CurrentClient.InstallationId);
+        }
 
+        private async void UpdateRegistration(string installationId)
+        {
+            List<string> extraTags = new List<string>();
+            extraTags.Add(XamarinMastering.Helpers.RegistrationHelper.CurrentPlatformId);
+            await XamarinMastering.Helpers.RegistrationHelper.UpdateInstallationTagsAsync(installationId, extraTags);
         }
 
         public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
@@ -93,5 +108,54 @@ namespace XamarinMastering.iOS
             Helpers.ToastHelper.ProcessNotification(userInfo);
         }
 
+        //Part 9: Adding Tagging Support: Pre-provisioned
+        public async Task RegisterForPushNotifications(MobileServiceClient client)
+        {
+            if (AppDelegate.PushDeviceToken != null)
+            {
+                try
+                {
+                    string registrationId = AppDelegate.PushDeviceToken
+                                                       .Description
+                                                       .Trim('<', '>')
+                                                       .Replace(" ", string.Empty)
+                                                       .ToUpperInvariant();
+
+                    DeviceInstallation installation = new DeviceInstallation
+                    {
+                        InstallationId = client.InstallationId,
+                        Platform = "apns",
+                        PushChannel = registrationId
+                    };
+
+                    PushTemplate genericTemplate = new PushTemplate
+                    {
+                        Body = "{\"aps\":{\"alert\":\"$(messageParam)\"}}"
+                    };
+
+                    //Tag: specific device received this notification
+                    //installation.Tags.Add("iOS");
+                    installation.Templates.Add("genericTemplate", genericTemplate);
+
+                    PushTemplate discussionTemplate = new PushTemplate
+                    {
+                        Body = "{\"aps\":{\"alert\":\"$(content)\"}}"
+                    };
+
+                    installation.Templates.Add("discussionTemplate", discussionTemplate);
+
+                    DeviceInstallation response = await client.InvokeApiAsync<DeviceInstallation, DeviceInstallation>($"/push/installations/{client.InstallationId}", installation, HttpMethod.Put, new Dictionary<string, string>());
+
+                    List<string> extraTags = new List<string>();
+
+                    extraTags.Add(XamarinMastering.Helpers.RegistrationHelper.CurrentPlatformId);
+
+                    await XamarinMastering.Helpers.RegistrationHelper.UpdateInstallationTagsAsync(client.InstallationId, extraTags);
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+        }
     }
 }

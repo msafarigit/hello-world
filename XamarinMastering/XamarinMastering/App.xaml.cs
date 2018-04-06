@@ -33,7 +33,9 @@ namespace XamarinMastering
 
         public static MainViewModel ViewModel { get; set; }
         public static INavigation MainNavigation { get; set; }
-		public App ()
+        public static Pages.DiscussionPage CurrentDiscussionPage { get; set; }
+
+        public App ()
 		{
             InitializeComponent();
 

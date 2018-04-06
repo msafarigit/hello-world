@@ -28,6 +28,7 @@ namespace XamarinMastering.ViewModels
             this.TechnologyNews = new ObservableCollection<NewsInformation>();
             this.TrendingNews = new ObservableCollection<NewsInformation>();
             this.Favorites = new FavoritesCollection();
+            this.CurrentDiscussion = new DiscussionCollection();
 
             this.CurrentUser = new UserInformation
             {
@@ -96,6 +97,20 @@ namespace XamarinMastering.ViewModels
         {
             get { return _currentUser; }
             set { this.SetProperty(ref this._currentUser, value); }
+        }
+
+        private DiscussionCollection _currentDiscussion;
+        public DiscussionCollection CurrentDiscussion
+        {
+            get { return this._currentDiscussion; }
+            set { this.SetProperty(ref this._currentDiscussion, value); }
+        }
+
+        private string _currentMessage;
+        public string CurrentMessage
+        {
+            get { return this._currentMessage; }
+            set { this.SetProperty(ref this._currentMessage, value); }
         }
 
         private string _platformLabel;

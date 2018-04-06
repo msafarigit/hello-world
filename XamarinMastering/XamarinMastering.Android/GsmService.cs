@@ -23,6 +23,7 @@ using XamarinMastering.Common;
 using XamarinMastering.Droid;
 using XamarinMastering.Droid.Helpers;
 using XamarinMastering.Data;
+using System.Net.Http;
 
 //we can set this permissions in android manifest, but following permissions is required to set in assembly!
 [assembly: Permission(Name = "@PACKAGE_NAME@.permission.C2D_MESSAGE")]
@@ -63,7 +64,7 @@ namespace XamarinMastering.Droid
 
         protected override void OnMessage(Context context, Intent intent)
         {
-            var msg = new StringBuilder();
+            StringBuilder msg = new StringBuilder();
 
             if (intent != null && intent.Extras != null)
             {
@@ -71,16 +72,26 @@ namespace XamarinMastering.Droid
                     msg.AppendLine(key + "=" + intent.Extras.Get(key).ToString());
             }
 
-            string title = intent.Extras.Get("message").ToString();
+            string message = intent.Extras.Get("message").ToString();
 
             //Store the message
-            var prefs = GetSharedPreferences(context.PackageName, FileCreationMode.Private);
-            var edit = prefs.Edit();
+            ISharedPreferences prefs = GetSharedPreferences(context.PackageName, FileCreationMode.Private);
+            ISharedPreferencesEditor edit = prefs.Edit();
             edit.PutString("last_msg", msg.ToString());
             edit.Commit();
 
-            //responding to the notification: show to device
-            CreateNotification(title, "A new Favorite has been added");
+            if (message.Contains("~"))
+            {
+                List<string> contents = message.Split('~').ToList();
+
+                XamarinMastering.Helpers.DiscussionHelper.AddResponse(contents[0], contents[1], contents[2]);
+
+            }
+            else if (!string.IsNullOrEmpty(message))
+            {
+                //responding to the notification: show to device
+                CreateNotification(message, "A new Favorite has been added");
+            }
 
             return;
         }
@@ -107,10 +118,15 @@ namespace XamarinMastering.Droid
         protected override void OnRegistered(Context context, string registrationId)
         {
             RegistrationID = registrationId;
-            Push push = FavoritesManager.DefaultManager.CurrentClient.GetPush();
-            MainActivity.CurrentActivity.RunOnUiThread(() => Register(push, null));
+            //Part: 7 Push Notification
+            //Push push = FavoritesManager.DefaultManager.CurrentClient.GetPush();
+            //MainActivity.CurrentActivity.RunOnUiThread(() => Register(push, null));
+
+            //Part 9: Adding Tagging Support:  Pre-provisioned
+            MainActivity.CurrentActivity.RunOnUiThread(() => RegisterForPushNotifications(context, FavoritesManager.DefaultManager.CurrentClient));
         }
 
+        //Part: 7 Push Notification
         public async void Register(Microsoft.WindowsAzure.MobileServices.Push push, IEnumerable<string> tags)
         {
             try
@@ -118,18 +134,66 @@ namespace XamarinMastering.Droid
                 //messageParam: is defined in edit favorite script from azure
                 const string templateBodyGCM = "{\"data\":{\"message\":\"$(messageParam)\"}}";
 
-                //JObject templates = new JObject();
-                //templates["genericMessage"] = new JObject
-                //{
-                //    {"body", templateBodyGCM}
-                //};
+                JObject templates = new JObject();
+                templates["genericMessage"] = new JObject
+                {
+                    {"body", templateBodyGCM}
+                };
 
-                //await push.RegisterAsync(RegistrationID, templates);
-
-                await push.RegisterTemplateAsync(RegistrationID, templateBodyGCM, "body");
-
+                await push.RegisterAsync(RegistrationID, templates);
             }
             catch (Exception ex)
+            {
+            }
+        }
+
+        //Part 9: Adding Tagging Support:  Pre-provisioned
+        public async void RegisterForPushNotifications(Context context, MobileServiceClient client)
+        {
+            if (GcmClient.IsRegistered(context))
+            {
+                try
+                {
+                    string registrationId = GcmClient.GetRegistrationId(context);
+
+                    DeviceInstallation installation = new DeviceInstallation
+                    {
+                        InstallationId = client.InstallationId,
+                        Platform = "gcm",
+                        PushChannel = registrationId
+                    };
+
+                    PushTemplate genericTemplate = new PushTemplate
+                    {
+                        Body = "{\"data\":{\"message\":\"$(messageParam)\"}}"
+                    };
+
+                    installation.Templates.Add("genericTemplate", genericTemplate);
+
+                    PushTemplate discussionTemplate = new PushTemplate
+                    {
+                        Body = "{\"data\":{\"message\":\"$(content)\"}}"
+                    };
+
+                    installation.Templates.Add("discussionTemplate", discussionTemplate);
+
+                    //List<string> extraTags = new List<string>();
+                    //Tag: specific device received this notification
+                    //extraTags.Add("Android");
+                    //installation.Tags = extraTags;
+
+                    DeviceInstallation response = await client.InvokeApiAsync<DeviceInstallation, DeviceInstallation>($"/push/installations/{client.InstallationId}", installation, HttpMethod.Put, new Dictionary<string, string>());
+
+                    List<string> extraTags = new List<string>();
+                    extraTags.Add(XamarinMastering.Helpers.RegistrationHelper.CurrentPlatformId);
+
+                    await XamarinMastering.Helpers.RegistrationHelper.UpdateInstallationTagsAsync(client.InstallationId, extraTags);
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+            else
             {
             }
         }

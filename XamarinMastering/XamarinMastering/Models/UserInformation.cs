@@ -14,6 +14,13 @@ namespace XamarinMastering
             set { this.SetProperty(ref this._dispalyName, value); }
         }
 
+        private string _description;
+        public string Description
+        {
+            get { return this._description; }
+            set { this.SetProperty(ref this._description, value); }
+        }
+
         private string _bioContent;
         public string BioContent
         {
@@ -26,6 +33,13 @@ namespace XamarinMastering
         {
             get { return _profileImageUrl; }
             set { this.SetProperty(ref this._profileImageUrl, value); }
+        }
+
+        private string _installationId;
+        public string InstallationId
+        {
+            get { return this._installationId; }
+            set { this.SetProperty(ref this._installationId, value); }
         }
     }
 }
