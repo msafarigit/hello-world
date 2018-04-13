@@ -163,6 +163,8 @@ namespace XamarinMastering.Droid
                         PushChannel = registrationId
                     };
 
+                    //Template: Specify exact format for receive notification
+                    //$(messageParam): define a variable which server would fill this
                     PushTemplate genericTemplate = new PushTemplate
                     {
                         Body = "{\"data\":{\"message\":\"$(messageParam)\"}}"
@@ -184,10 +186,11 @@ namespace XamarinMastering.Droid
 
                     DeviceInstallation response = await client.InvokeApiAsync<DeviceInstallation, DeviceInstallation>($"/push/installations/{client.InstallationId}", installation, HttpMethod.Put, new Dictionary<string, string>());
 
-                    List<string> extraTags = new List<string>();
-                    extraTags.Add(XamarinMastering.Helpers.RegistrationHelper.CurrentPlatformId);
+                    //dynamicTags: what the user want such as social news as notification
+                    List<string> dynamicTags = new List<string>();
+                    dynamicTags.Add(XamarinMastering.Helpers.RegistrationHelper.CurrentPlatformId);
 
-                    await XamarinMastering.Helpers.RegistrationHelper.UpdateInstallationTagsAsync(client.InstallationId, extraTags);
+                    await XamarinMastering.Helpers.RegistrationHelper.UpdateInstallationTagsAsync(client.InstallationId, dynamicTags);
                 }
                 catch (Exception ex)
                 {

@@ -39,5 +39,10 @@ namespace XamarinMastering.Pages
 
             base.OnAppearing();
         }
+
+        private async void discussToolbar_Clicked(object sender, EventArgs e)
+        {
+            await App.MainNavigation.PushModalAsync(new UserSelectionPage(), true);
+        }
     }
 }

@@ -141,7 +141,9 @@ namespace XamarinMastering.UWP
                         PushChannel = registrationId
                     };
 
-                    var genericTemplate = new WindowsPushTemplate
+                    //Template: Specify exact format for receive notification
+                    //$(messageParam): define a variable which server would fill this
+                    WindowsPushTemplate genericTemplate = new WindowsPushTemplate
                     {
                         Body = "{\"message\":\"$(messageParam)\"}"
                     };
@@ -149,7 +151,7 @@ namespace XamarinMastering.UWP
                     genericTemplate.Headers.Add("X-WNS-Type", "wns/raw");
                     installation.Templates.Add("genericTemplate", genericTemplate);
 
-                    var discussionTemplate = new WindowsPushTemplate
+                    WindowsPushTemplate discussionTemplate = new WindowsPushTemplate
                     {
                         Body = "{\"message\":\"$(content)\"}"
                     };
@@ -164,10 +166,11 @@ namespace XamarinMastering.UWP
 
                     DeviceInstallation recordedInstallation = await client.InvokeApiAsync<DeviceInstallation, DeviceInstallation>($"/push/installations/{client.InstallationId}", installation, HttpMethod.Put, new Dictionary<string, string>());
 
-                    List<string> extraTags = new List<string>();
-                    extraTags.Add(XamarinMastering.Helpers.RegistrationHelper.CurrentPlatformId);
+                    //dynamicTags: what the user want such as social news as notification
+                    List<string> dynamicTags = new List<string>();
+                    dynamicTags.Add(XamarinMastering.Helpers.RegistrationHelper.CurrentPlatformId);
 
-                    await XamarinMastering.Helpers.RegistrationHelper.UpdateInstallationTagsAsync(client.InstallationId, extraTags);
+                    await XamarinMastering.Helpers.RegistrationHelper.UpdateInstallationTagsAsync(client.InstallationId, dynamicTags);
 
                     channel.PushNotificationReceived += OnNotificationReceived;
                 }

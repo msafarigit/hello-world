@@ -2,13 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:XamarinMastering" 
-             x:Class="XamarinMastering.Pages.ItemDetailPage">
+             x:Class="XamarinMastering.Pages.ItemDetailPage"
+             Title="Full Article">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Clicked="discussToolbar_Clicked" Text="Discuss" Order="Primary" Icon="icon_discuss.png" />
         <ToolbarItem Command="{StaticResource ToggleFavoriteCommand}" CommandParameter="{Binding}" Text="Favorite this" Icon="icon_favorites.png" Order="Secondary"/>
     </ContentPage.ToolbarItems>
     
-    <StackLayout Margin="40">
+    <StackLayout Margin="20">
 
         <Image VerticalOptions="Center" Source="{Binding ImageUrl}" Aspect="AspectFit" />
         <Label Style="{DynamicResource ListTitleStyle}" Text="{Binding Title}"/>

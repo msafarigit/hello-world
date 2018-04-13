@@ -28,7 +28,7 @@ namespace XamarinMastering.Pages
         {
             App.CurrentDiscussionPage = this;
 
-            MessagingCenter.Subscribe<DiscussionPage, string>(this, "NewMessage", (sender, arg) =>
+            Xamarin.Forms.MessagingCenter.Subscribe<DiscussionPage, string>(this, "NewMessage", (sender, arg) =>
             {
                 discussionListView.ScrollTo(App.ViewModel.CurrentDiscussion.Last(), ScrollToPosition.End, true);
             });
@@ -39,22 +39,20 @@ namespace XamarinMastering.Pages
             base.OnDisappearing();
 
             App.CurrentDiscussionPage = null;
-            MessagingCenter.Unsubscribe<DiscussionPage>(this, "NewMessage");
-            MessagingCenter.Unsubscribe<DiscussionPage, string>(this, "NewMessage");
+            Xamarin.Forms.MessagingCenter.Unsubscribe<DiscussionPage>(this, "NewMessage");
+            Xamarin.Forms.MessagingCenter.Unsubscribe<DiscussionPage, string>(this, "NewMessage");
         }
 
         private void LoadDiscussion()
         {
             BindingContext = App.ViewModel;
 
-            if (App.ViewModel.CurrentDiscussion.Count > 0) discussionListView.ScrollTo(App.ViewModel.CurrentDiscussion.Last(), ScrollToPosition.End, true);
+            if (App.ViewModel.CurrentDiscussion.Count > 0)
+                discussionListView.ScrollTo(App.ViewModel.CurrentDiscussion.Last(), ScrollToPosition.End, true);
 
             TapGestureRecognizer sendRecognizer = new TapGestureRecognizer();
-
             sendRecognizer.Tapped += OnSendTapped;
-
             sendButton.GestureRecognizers.Add(sendRecognizer);
-
         }
 
         private async void OnSendTapped(object sender, EventArgs e)

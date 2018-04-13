@@ -60,7 +60,7 @@ namespace XamarinMastering.Helpers
             {
                 AddResponse(receiverId, message);
 
-                var updateInformation = new Newtonsoft.Json.Linq.JObject();
+                Newtonsoft.Json.Linq.JObject updateInformation = new Newtonsoft.Json.Linq.JObject();
 
                 updateInformation.Add("SenderId", App.ViewModel.CurrentUser.InstallationId);
                 updateInformation.Add("ReceiverId", receiverId);
@@ -78,7 +78,6 @@ namespace XamarinMastering.Helpers
             {
 
             }
-
 
             return true;
         }

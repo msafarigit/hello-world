@@ -128,6 +128,8 @@ namespace XamarinMastering.iOS
                         PushChannel = registrationId
                     };
 
+                    //Template: Specify exact format for receive notification
+                    //$(messageParam): define a variable which server would fill this
                     PushTemplate genericTemplate = new PushTemplate
                     {
                         Body = "{\"aps\":{\"alert\":\"$(messageParam)\"}}"
@@ -135,6 +137,7 @@ namespace XamarinMastering.iOS
 
                     //Tag: specific device received this notification
                     //installation.Tags.Add("iOS");
+                    //installation.Tags.Add("Texas");
                     installation.Templates.Add("genericTemplate", genericTemplate);
 
                     PushTemplate discussionTemplate = new PushTemplate
@@ -146,11 +149,11 @@ namespace XamarinMastering.iOS
 
                     DeviceInstallation response = await client.InvokeApiAsync<DeviceInstallation, DeviceInstallation>($"/push/installations/{client.InstallationId}", installation, HttpMethod.Put, new Dictionary<string, string>());
 
-                    List<string> extraTags = new List<string>();
+                    //dynamicTags: what the user want such as social news as notification
+                    List<string> dynamicTags = new List<string>();
+                    dynamicTags.Add(XamarinMastering.Helpers.RegistrationHelper.CurrentPlatformId);
 
-                    extraTags.Add(XamarinMastering.Helpers.RegistrationHelper.CurrentPlatformId);
-
-                    await XamarinMastering.Helpers.RegistrationHelper.UpdateInstallationTagsAsync(client.InstallationId, extraTags);
+                    await XamarinMastering.Helpers.RegistrationHelper.UpdateInstallationTagsAsync(client.InstallationId, dynamicTags);
                 }
                 catch (Exception ex)
                 {
